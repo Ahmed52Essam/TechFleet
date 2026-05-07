@@ -3,6 +3,7 @@ import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CONTACT_INFO } from '../../lib/constants';
 
 export const WhatsAppButton = () => {
     const { t } = useTranslation();
@@ -12,7 +13,7 @@ export const WhatsAppButton = () => {
 
     return (
         <a
-            href={`https://wa.me/201008078769?text=${whatsappMessage}`}
+            href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-6 right-6 z-50 focus:outline-none"

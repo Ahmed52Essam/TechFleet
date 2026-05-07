@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../ui/Button';
 import { Menu, X, Languages } from 'lucide-react';
-import { cn } from '../../lib/utils';
+import { cn, scrollToId } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { SITE_SECTIONS, getNavbarLinks, getSectionHref } from '../../lib/navigation';
 import Logo from '/TechBridgelogo.png';
 
 export const Navbar = () => {
@@ -22,31 +23,18 @@ export const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navLinks = [
-        { name: t('nav.benefits'), href: '#comparison' },
-        { name: t('nav.hardware'), href: '#catalog' },
-        { name: t('nav.howItWorks'), href: '#features' },
-        { name: t('nav.faq'), href: '#faq' },
-    ];
+    const navLinks = getNavbarLinks();
 
-    const scrollToSection = (id: string) => {
+    const handleNavClick = (href: string) => {
         if (location.pathname !== '/') {
             navigate('/');
             setTimeout(() => {
-                const element = document.querySelector(id);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
+                scrollToId(href);
             }, 100);
-            setIsMenuOpen(false);
-            return;
+        } else {
+            scrollToId(href);
         }
-        
-        const element = document.querySelector(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setIsMenuOpen(false);
-        }
+        setIsMenuOpen(false);
     };
 
     const toggleLanguage = () => {
@@ -73,15 +61,15 @@ export const Navbar = () => {
                     <div className="hidden md:flex items-center gap-8 bg-white/50 backdrop-blur-sm px-6 py-2 rounded-full border border-white/30 shadow-sm">
                         {navLinks.map((link) => (
                             <a
-                                key={link.href}
-                                href={link.href}
+                                key={link.id}
+                                href={getSectionHref(link)}
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    scrollToSection(link.href);
+                                    handleNavClick(link.id);
                                 }}
                                 className="text-sm font-medium text-slate-600 hover:text-primary transition-colors relative group"
                             >
-                                {link.name}
+                                {t(link.labelKey)}
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                             </a>
                         ))}
@@ -97,10 +85,10 @@ export const Navbar = () => {
                             {i18n.language === 'en' ? 'العربية' : 'English'}
                         </button>
                         <Button
-                            onClick={() => scrollToSection('#contact')}
+                            onClick={() => handleNavClick(SITE_SECTIONS.CONTACT.id)}
                             className="relative overflow-hidden group bg-primary hover:bg-primary/90 rounded-full px-6 shadow-glow"
                         >
-                            <span className="relative z-10">{t('nav.getStarted')}</span>
+                            <span className="relative z-10">{t(SITE_SECTIONS.CONTACT.labelKey)}</span>
                             <div className="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent z-0"></div>
                         </Button>
                     </div>
@@ -134,19 +122,19 @@ export const Navbar = () => {
                             <div className="flex flex-col space-y-4">
                                 {navLinks.map((link) => (
                                     <a
-                                        key={link.href}
-                                        href={link.href}
+                                        key={link.id}
+                                        href={getSectionHref(link)}
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            scrollToSection(link.href);
+                                            handleNavClick(link.id);
                                         }}
                                         className="text-base font-medium text-slate-700 hover:text-primary py-2 px-4 rounded-lg hover:bg-slate-50"
                                     >
-                                        {link.name}
+                                        {t(link.labelKey)}
                                     </a>
                                 ))}
-                                <Button className="w-full rounded-xl" onClick={() => scrollToSection('#contact')}>
-                                    {t('nav.getStarted')}
+                                <Button className="w-full rounded-xl" onClick={() => handleNavClick(SITE_SECTIONS.CONTACT.id)}>
+                                    {t(SITE_SECTIONS.CONTACT.labelKey)}
                                 </Button>
                             </div>
                         </motion.div>

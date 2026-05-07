@@ -4,43 +4,33 @@ import { Catalog } from '../components/sections/Catalog';
 import { Features } from '../components/sections/Features';
 import { TrustSection } from '../components/sections/TrustSection';
 import { Contact } from '../components/sections/Contact';
-import { motion } from 'framer-motion';
-import type { ReactNode } from 'react';
-
-// Simple wrapper for scroll animations
-const SectionWrapper = ({ children, id }: { children: ReactNode, id?: string }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6 }}
-      id={id}
-    >
-      {children}
-    </motion.div>
-  );
-};
+import { SITE_SECTIONS } from '../lib/navigation';
+import { Section } from '../components/ui/Section';
 
 const Home = () => {
   return (
     <>
       <Hero />
-      <SectionWrapper>
+      
+      <Section section={SITE_SECTIONS.BENEFITS}>
         <Comparison />
-      </SectionWrapper>
-      <SectionWrapper>
+      </Section>
+
+      <Section section={SITE_SECTIONS.HARDWARE} variant="glass">
         <Catalog />
-      </SectionWrapper>
-      <SectionWrapper>
+      </Section>
+
+      <Section section={SITE_SECTIONS.HOW_IT_WORKS} variant="alt" containerSize="wide">
         <Features />
-      </SectionWrapper>
-      <SectionWrapper>
+      </Section>
+
+      <Section variant="dark">
         <TrustSection />
-      </SectionWrapper>
-      <SectionWrapper>
+      </Section>
+
+      <Section section={SITE_SECTIONS.CONTACT} variant="dark">
         <Contact />
-      </SectionWrapper>
+      </Section>
     </>
   );
 };

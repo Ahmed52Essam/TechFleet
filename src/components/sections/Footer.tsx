@@ -1,6 +1,7 @@
 import { Linkedin, MessageSquare, Mail, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { CONTACT_INFO, ROUTES } from '../../lib/constants';
 
 export const Footer = () => {
     const { t } = useTranslation();
@@ -13,33 +14,33 @@ export const Footer = () => {
                         <h3 className="text-xl font-bold text-white mb-2">TechBridge</h3>
                         <p className="text-sm">{t('footer.tagline')}</p>
                         <div className="flex flex-col gap-1 mt-3">
-                            <a href="mailto:info@techbridge-eg.com" className="text-sm hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
+                            <a href={`mailto:${CONTACT_INFO.email}`} className="text-sm hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
                                 <Mail className="h-3.5 w-3.5" />
-                                info@techbridge-eg.com
+                                {CONTACT_INFO.email}
                             </a>
-                            <a href="tel:+201008078769" className="text-sm hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
+                            <a href={`tel:${CONTACT_INFO.phoneRaw}`} className="text-sm hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
                                 <Phone className="h-3.5 w-3.5" />
-                                +20 100 807 8769
+                                {CONTACT_INFO.phone}
                             </a>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-6">
-                        <Link to="/terms" className="hover:text-white transition-colors">{t('footer.terms')}</Link>
-                        <Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacy')}</Link>
+                        <Link to={ROUTES.terms} className="hover:text-white transition-colors">{t('footer.terms')}</Link>
+                        <Link to={ROUTES.privacy} className="hover:text-white transition-colors">{t('footer.privacy')}</Link>
                     </div>
 
                     <div className="flex gap-4">
-                        <a href="tel:+201008078769" className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="Phone">
+                        <a href={`tel:${CONTACT_INFO.phoneRaw}`} className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="Phone">
                             <Phone className="h-5 w-5" />
                         </a>
-                        <a href="mailto:info@techbridge-eg.com" className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="Email">
+                        <a href={`mailto:${CONTACT_INFO.email}`} className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="Email">
                             <Mail className="h-5 w-5" />
                         </a>
-                        <a href="#" className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="LinkedIn">
+                        <a href={CONTACT_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="LinkedIn">
                             <Linkedin className="h-5 w-5" />
                         </a>
-                        <a href="https://wa.me/201008078769" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="WhatsApp">
+                        <a href={`https://wa.me/${CONTACT_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-900 rounded-full hover:bg-slate-800 hover:text-white transition-colors" aria-label="WhatsApp">
                             <MessageSquare className="h-5 w-5" />
                         </a>
                     </div>
